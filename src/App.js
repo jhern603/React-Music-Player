@@ -2,6 +2,7 @@ import userEvent from "@testing-library/user-event";
 import React, { useState } from "react";
 import Player from "./components/Player";
 import Song from "./components/Song";
+import Library from "./components/Library";
 import data from "./data";
 function App() {
   const [songs, setSongs] = useState(data());
@@ -15,6 +16,7 @@ function App() {
         setisPlaying={setisPlaying}
         currentSong={currentSong}
       />
+      <Library songs={songs}/>
     </div>
   );
 }

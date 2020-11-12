@@ -22,6 +22,15 @@ function myMusic() {
       id: uuidv4,
       active: false,
     },
+    {
+      name: "Lalala",
+      cover: "https://i1.sndcdn.com/artworks-000556999389-zr4qub-t500x500.jpg",
+      audio: "https://free.mp3-download.best/QucVvB:cMh2rB",
+      artist: "Y2K & bbno$",
+      color: ["#FFFFFF", "#FBFBFB"],
+      id: uuidv4,
+      active: false,
+    },
   ];
 }
 

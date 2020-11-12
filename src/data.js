@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuid } from "uuid";
 
 function myMusic() {
   return [
@@ -9,8 +9,8 @@ function myMusic() {
       audio: "https://free.mp3-download.best/-auUGvH:aXgEJ",
       artist: "Lil Uzi Vert",
       color: ["#FFFFFF", "#FBFBFB"],
-      id: uuidv4,
-      active: false,
+      id: uuid,
+      active: true,
     },
     {
       name: "Lean Wit Me",
@@ -19,7 +19,7 @@ function myMusic() {
       audio: "https://free.mp3-download.best/BucVvB:WUY1rB",
       artist: "Juice Wrld",
       color: ["#FFFFFF", "#FBFBFB"],
-      id: uuidv4,
+      id: uuid,
       active: false,
     },
     {
@@ -28,7 +28,7 @@ function myMusic() {
       audio: "https://free.mp3-download.best/QucVvB:cMh2rB",
       artist: "Y2K & bbno$",
       color: ["#FFFFFF", "#FBFBFB"],
-      id: uuidv4,
+      id: uuid,
       active: false,
     },
   ];

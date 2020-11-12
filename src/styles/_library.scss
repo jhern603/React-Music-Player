@@ -6,6 +6,9 @@
   height: 100%;
   box-shadow: 1px 1px 20px rgba(50, 50, 50, 0.25);
   overflow: scroll;
+  h2{
+    padding: 1rem 1rem
+  }
 }
 .library-song {
   cursor: pointer;
@@ -43,4 +46,8 @@
   background-color: rgba(155, 155, 155, 0.5);
   border-radius: 40px;
   border: transparent;
+}
+
+.selected{
+  background: aquamarine;
 }

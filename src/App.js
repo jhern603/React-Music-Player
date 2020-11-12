@@ -1,23 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
-
+import userEvent from "@testing-library/user-event";
+import React, { useState } from "react";
+import Player from "./components/Player";
+import Song from "./components/Song";
+import data from "./data";
 function App() {
+  const [songs, setSongs] = useState(data());
+  const [currentSong, setCurrentSong] = useState(songs[0]);
+  const [isPlaying, setisPlaying] = useState(false);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Song currentSong={currentSong} />
+      <Player
+        isPlaying={isPlaying}
+        setisPlaying={setisPlaying}
+        currentSong={currentSong}
+      />
     </div>
   );
 }

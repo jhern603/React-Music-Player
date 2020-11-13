@@ -9,7 +9,7 @@ function myMusic() {
       audio: "https://free.mp3-download.best/-auUGvH:aXgEJ",
       artist: "Lil Uzi Vert",
       color: ["#FFFFFF", "#FBFBFB"],
-      id: uuid,
+      id: uuid(),
       active: true,
     },
     {
@@ -19,7 +19,7 @@ function myMusic() {
       audio: "https://free.mp3-download.best/BucVvB:WUY1rB",
       artist: "Juice Wrld",
       color: ["#FFFFFF", "#FBFBFB"],
-      id: uuid,
+      id: uuid(),
       active: false,
     },
     {
@@ -28,7 +28,7 @@ function myMusic() {
       audio: "https://free.mp3-download.best/QucVvB:cMh2rB",
       artist: "Y2K & bbno$",
       color: ["#FFFFFF", "#FBFBFB"],
-      id: uuid,
+      id: uuid(),
       active: false,
     },
   ];

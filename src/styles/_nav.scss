@@ -1,11 +1,16 @@
 nav{
+  h1{
+    color:white;
+  }
+  color:white;
   min-height: 10vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
   button{
+    color: white;
     background: transparent;
-    border: 2px solid #2b2b2b;
+    border: 2px solid white;
     cursor: pointer;
     padding: 0.5rem;
     transition: all 0.3s ease;

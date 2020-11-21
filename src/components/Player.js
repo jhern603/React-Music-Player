@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlay,
@@ -6,7 +6,7 @@ import {
   faAngleRight,
   faPause,
 } from "@fortawesome/free-solid-svg-icons";
-
+import { playAudio } from "../util";
 const Player = ({
   currentSong,
   isPlaying,
@@ -14,7 +14,27 @@ const Player = ({
   audioRef,
   songInfo,
   setSongInfo,
+  songs,
+  setCurrentSong,
+  setSongs,
 }) => {
+  //useEffect
+  useEffect(() => {
+    const newSongs = songs.map((song) => {
+      if (song.id === currentSong.id) {
+        return {
+          ...song,
+          active: true,
+        };
+      } else {
+        return {
+          ...song,
+          active: false,
+        };
+      }
+    });
+    setSongs(newSongs);
+  });
   //Event handlers
   const playSongHandler = () => {
     if (isPlaying) {
@@ -34,6 +54,24 @@ const Player = ({
     audioRef.current.currentTime = e.target.value;
     setSongInfo({ ...songInfo, currentTime: e.target.value });
   };
+
+  const skipTrackHandler = (direction) => {
+    let currentIdx = songs.findIndex((song) => song.id === currentSong.id);
+    if (direction === "skip-forward") {
+      setCurrentSong(songs[(currentIdx + 1) % songs.length]);
+      playAudio(isPlaying, audioRef);
+    }
+    if (direction === "skip-back") {
+      if ((currentIdx - 1) % songs.length === -1) {
+        setCurrentSong(songs[songs.length - 1]);
+        playAudio(isPlaying, audioRef);
+
+        return;
+      }
+      setCurrentSong(songs[currentIdx - 1]);
+      playAudio(isPlaying, audioRef);
+    }
+  };
   //Return
   return (
     <div className="player">
@@ -43,13 +81,20 @@ const Player = ({
           onChange={dragHandler}
           min={0}
           max={songInfo.duration || 0}
-          value={songInfo.currentTime}
+          //Do not use "value" as that will create a conflict 
+          //between the actual value being passed, and the user attempting to move the slider
+          defaultValue={songInfo.currentTime}
           type="range"
         />
         <p>{getTime(songInfo.duration - songInfo.currentTime)}</p>
       </div>
       <div className="play-control">
-        <FontAwesomeIcon className="skip-back" icon={faAngleLeft} size="2x" />
+        <FontAwesomeIcon
+          onClick={() => skipTrackHandler("skip-back")}
+          className="skip-back"
+          icon={faAngleLeft}
+          size="2x"
+        />
         <FontAwesomeIcon
           onClick={playSongHandler}
           className="play"
@@ -57,6 +102,7 @@ const Player = ({
           size="2x"
         />
         <FontAwesomeIcon
+          onClick={() => skipTrackHandler("skip-forward")}
           className="skip-forward"
           icon={faAngleRight}
           size="2x"

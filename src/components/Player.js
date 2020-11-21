@@ -6,7 +6,6 @@ import {
   faAngleRight,
   faPause,
 } from "@fortawesome/free-solid-svg-icons";
-import { playAudio } from "../util";
 const Player = ({
   currentSong,
   isPlaying,
@@ -34,7 +33,7 @@ const Player = ({
       }
     });
     setSongs(newSongs);
-  });
+  }, [currentSong]);
   //Event handlers
   const playSongHandler = () => {
     if (isPlaying) {
@@ -55,38 +54,54 @@ const Player = ({
     setSongInfo({ ...songInfo, currentTime: e.target.value });
   };
 
-  const skipTrackHandler = (direction) => {
+  const skipTrackHandler = async (direction) => {
     let currentIdx = songs.findIndex((song) => song.id === currentSong.id);
     if (direction === "skip-forward") {
-      setCurrentSong(songs[(currentIdx + 1) % songs.length]);
-      playAudio(isPlaying, audioRef);
+      await setCurrentSong(songs[(currentIdx + 1) % songs.length]);
     }
     if (direction === "skip-back") {
       if ((currentIdx - 1) % songs.length === -1) {
         setCurrentSong(songs[songs.length - 1]);
-        playAudio(isPlaying, audioRef);
-
         return;
       }
-      setCurrentSong(songs[currentIdx - 1]);
-      playAudio(isPlaying, audioRef);
+      await setCurrentSong(songs[currentIdx - 1]);
     }
+    if (isPlaying) audioRef.current.play();
   };
+
+  //Adding Scrubber Style
+  const trackAnim = {
+    transform: `translateX(${songInfo.animationPercentage}%)`,
+  };
+
   //Return
   return (
     <div className="player">
       <div className="time-control">
         <p>{getTime(songInfo.currentTime)}</p>
-        <input
-          onChange={dragHandler}
-          min={0}
-          max={songInfo.duration || 0}
-          //Do not use "value" as that will create a conflict 
-          //between the actual value being passed, and the user attempting to move the slider
-          defaultValue={songInfo.currentTime}
-          type="range"
-        />
-        <p>{getTime(songInfo.duration - songInfo.currentTime)}</p>
+        <div
+          style={{
+            background: `linear-gradient(to right, ${currentSong.color[0]},${currentSong.color[1]})`,
+          }}
+          className="track"
+        >
+          <input
+            onChange={dragHandler}
+            min={0}
+            max={songInfo.duration || 0}
+            //Do not use "value" as that will create a conflict
+            //between the actual value being passed, and the user attempting to move the slider
+            defaultValue={songInfo.currentTime}
+            type="range"
+          />
+          <div style={trackAnim} className="animate-track"></div>
+        </div>
+        <p>
+          {" "}
+          {songInfo.duration
+            ? getTime(songInfo.duration - songInfo.currentTime)
+            : "0:00"}
+        </p>
       </div>
       <div className="play-control">
         <FontAwesomeIcon
